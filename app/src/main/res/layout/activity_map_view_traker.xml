@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/darkmode"
+    android:id="@+id/maincontainer"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MapViewTraker">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/dataload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_vertical"
+        android:layout_marginBottom="70dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="20dp"
+            android:alpha="1"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center|top"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_virusloading" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="Loading Please Wait ..."
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <include layout="@layout/content_map_view_traker" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="20dp">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="461dp"
+            android:background="@drawable/roundedclip"
+            android:clipChildren="true"
+            android:clipToPadding="true"
+            android:elevation="10dp"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:elevation="10dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context=".MapViewTraker" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="371dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center|center_horizontal|top"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/roundedclip"
+                    android:clipToPadding="true"
+                    android:foregroundGravity="center"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="11dp"
+                    app:cardUseCompatPadding="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/searchView"
+                        android:layout_width="277dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:background="@drawable/roundcard"
+                        android:completionThreshold="1"
+                        android:gravity="start|left"
+                        android:hint="Search"
+                        android:paddingLeft="25dp"
+                        android:textColor="#000000"
+                        android:textColorHint="#9E9E9E"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:theme="@style/AppTheme" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:layout_width="80dp"
+                        android:layout_height="55dp"
+                        android:id="@+id/tstbtn"
+                        app:elevation="0dp"
+                        app:rippleColor="@color/offwhite"
+                        android:layout_gravity="right|center_vertical"
+                        app:backgroundTint="@color/white"
+                        android:layout_marginRight="5dp"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/search" />
+                </androidx.cardview.widget.CardView>
+            </FrameLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_gravity="top"
+        android:background="@android:color/transparent"
+        android:clipChildren="true"
+        android:clipToPadding="false"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="60dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="20dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="false"
+        app:contentPaddingTop="-5dp"
+        app:layout_anchorGravity="top"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnBottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:layout_marginBottom="10dp"
+                    android:height="60dp"
+                    android:background="@drawable/rounded"
+                    android:defaultFocusHighlightEnabled="true"
+                    android:drawableTop="@drawable/ic_my_location_black_24dp"
+                    android:drawablePadding="2dp"
+                    app:elevation="10dp"
+                    android:focusable="auto"
+                    android:gravity="center|center_horizontal"
+                    android:paddingTop="8dp"
+                    android:text="@string/markLoctiaon"
+                    android:textColor="@color/white" />
+
+                <EditText
+                    android:id="@+id/describ"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="9dp"
+                    android:background="@drawable/roundcard"
+                    android:ems="10"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:hint="Describe  how is your day, how you feeling"
+                    android:inputType="textLongMessage|textMultiLine"
+                    android:lines="5"
+                    android:maxLines="5"
+                    android:minLines="1"
+                    android:nestedScrollingEnabled="true" />
+
+                <RadioGroup
+                    android:id="@+id/currstate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <RadioButton
+                        android:id="@+id/safe"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="60dp"
+                        android:layout_weight="1"
+                        android:gravity="center|center_horizontal"
+                        android:text="Safe" />
+
+                    <RadioButton
+                        android:id="@+id/critical"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|center_horizontal"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginRight="60dp"
+                        android:layout_weight="1"
+                        android:gravity="center|center_horizontal"
+                        android:text="Critical"
+                        android:textColorHighlight="#FF1F1F" />
+                </RadioGroup>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="6dp">
+
+                    <Button
+                        android:id="@+id/send"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ripplebtn"
+                        android:elevation="15dp"
+                        android:text="@string/markLoctiaon"
+                        android:textColor="#FFFFFF" />
+
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="0"
+                    android:alpha="0.3"
+                    android:background="?android:attr/listDivider" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:clipChildren="true"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="6dp">
+
+                    <Button
+                        android:id="@+id/emrg"
+                        android:layout_width="402dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/redripple"
+                        android:drawableRight="@drawable/ic_coronavirus"
+                        android:elevation="15dp"
+                        android:paddingLeft="120dp"
+                        android:paddingRight="120dp"
+                        android:text="Emergency Call "
+                        android:textColor="#FFFFFF" />
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

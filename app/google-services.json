@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "408962901363",
+    "firebase_url": "https://covidtrakcer.firebaseio.com",
+    "project_id": "covidtrakcer",
+    "storage_bucket": "covidtrakcer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408962901363:android:402e25a08ca8a9e848d106",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "408962901363-p8edlgbo14l038e1ml703fvdn3p3fia2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "06e1b2c9945c1a186ec2854a7546d56021dd16d2"
+          }
+        },
+        {
+          "client_id": "408962901363-t54rctsfqj56f3gcncrkl5regv00q46h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPxWi1WC7Z-dpzXId5ZeyKIu_oO4MIYa8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "408962901363-t54rctsfqj56f3gcncrkl5regv00q46h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
