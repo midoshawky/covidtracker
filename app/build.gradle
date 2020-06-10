@@ -4,6 +4,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        myapp {
+            storeFile file('/home/shawky/myCovid/key.jks')
+            storePassword '0181313510'
+            keyAlias = 'covidtraker'
+            keyPassword '0181313510'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
