@@ -104,5 +104,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="infected">it seems you have been infected by coronavirus, so please isolate your self away at your home</string>
+    <string name="noninfected">You aren`t infected may be it just some flu, thanks for awareness</string>
 
 </resources>

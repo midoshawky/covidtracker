@@ -13,6 +13,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -22,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -64,7 +66,8 @@ class MapViewTraker : AppCompatActivity(), OnMapReadyCallback {
     var safetyValu: String = "Safe"
     var phone: String = ""
     var messageTxt: EditText? = null
-    var MessageTxt:String = ""
+    var MessageTxt: String = ""
+    var syptomes: ArrayList<String>? = null
     var myLat: Double? = null
     var myLong: Double? = null
     var loaded: Boolean? = false
@@ -288,7 +291,9 @@ class MapViewTraker : AppCompatActivity(), OnMapReadyCallback {
     lateinit var coordinatorLayout: CoordinatorLayout
     lateinit var selectedCountry: String
     lateinit var geocoder: Geocoder
+    var myDialogs: MyDialogs ?= null
     lateinit var loctioanClinet: FusedLocationProviderClient
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map_view_traker)
@@ -314,10 +319,12 @@ class MapViewTraker : AppCompatActivity(), OnMapReadyCallback {
         dataShow!!.isNestedScrollingEnabled = true
         geocoder = Geocoder(this)
         loctioanClinet = LocationServices.getFusedLocationProviderClient(this)
+        myDialogs = MyDialogs(this, layoutInflater)
         countriesDataLst = ArrayList()
-
+        syptomes = ArrayList()
         //val dark: TransitionDrawable = maincontainer.background as TransitionDrawable
-
+        val connectionStatus = ConnectionStatus(this, layoutInflater)
+        println("Stats ${connectionStatus.checkNetworkAvailability()}")
         dataFetching()
 
         autoCompleteArrayAdapter = ArrayAdapter(
@@ -334,8 +341,7 @@ class MapViewTraker : AppCompatActivity(), OnMapReadyCallback {
 
             override fun onStateChanged(sheet: View, state: Int) {
                 when (state) {
-                    BottomSheetBehavior.STATE_EXPANDED ->
-                    {
+                    BottomSheetBehavior.STATE_EXPANDED -> {
                         Thread.sleep(500)
                         getSavedLocation()
                     }
@@ -349,7 +355,7 @@ class MapViewTraker : AppCompatActivity(), OnMapReadyCallback {
                 bottomSheetbehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 bottomSheetbehavior.state = BottomSheetBehavior.STATE_SETTLING
                 Btoombtn.text = resources.getText(R.string.Hide)
-                Handler().postDelayed({getSavedLocation()},600)
+                Handler().postDelayed({ getSavedLocation() }, 600)
             } else {
                 bottomSheetbehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 Btoombtn.text = resources.getText(R.string.markLoctiaon)
@@ -364,7 +370,13 @@ class MapViewTraker : AppCompatActivity(), OnMapReadyCallback {
         youState.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.safe -> safetyValu = "Safe"
-                R.id.critical -> safetyValu = "Critical"
+                R.id.critical -> {
+                    myDialogs!!.showSymptomsDialog(syptomes!!)
+                    if (syptomes!!.size in 1..5)
+                        safetyValu = "Critical"
+                    else
+                        safetyValu = "Safe"
+                }
             }
         }
         markLocation.setOnClickListener {
@@ -404,11 +416,12 @@ class MapViewTraker : AppCompatActivity(), OnMapReadyCallback {
 
         Handler().postDelayed({
             //dark.startTransition(500)
-            showThanksDialog()
-        },6000)
+            val myDialog: MyDialogs = MyDialogs(this, layoutInflater)
+            myDialog.showThanksDialog()
+        }, 6000)
     }
 
-    private fun dataFetching() {
+    fun dataFetching() {
         try {
             for (i in 0..5) {
                 println(i)
@@ -420,10 +433,11 @@ class MapViewTraker : AppCompatActivity(), OnMapReadyCallback {
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                 }
+
                 override fun onResponse(call: Call, response: Response) {
                     if (!response.isSuccessful)
-                    call.request()
-                    else{
+                        call.request()
+                    else {
                         val body = response.body()!!.string()
                         val jsonObject = JSONObject(body)
                         val global = jsonObject.getJSONObject("Global")
@@ -466,10 +480,10 @@ class MapViewTraker : AppCompatActivity(), OnMapReadyCallback {
                                 countries
                             )
                             autoCompleteText!!.setAdapter(autoCompleteArrayAdapter)
-                            if(loaded!!){
+                            if (loaded!!) {
                                 println("data loaded : ${dataFetching()}")
                                 dataload.visibility = View.GONE
-                            }else{
+                            } else {
                                 println("data loaded : ${dataFetching()}")
                                 dataload.visibility = View.VISIBLE
                             }
@@ -482,6 +496,7 @@ class MapViewTraker : AppCompatActivity(), OnMapReadyCallback {
 
         }
     }
+
     private fun scrollToPlace(selectedCountry: String) {
         val smoothScroller: RecyclerView.SmoothScroller = object : LinearSmoothScroller(this) {
             override fun calculateTimeForScrolling(dx: Int): Int {
@@ -664,20 +679,4 @@ class MapViewTraker : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    fun showThanksDialog()
-    {
-        val inflater = layoutInflater
-        val inflated = inflater.inflate(R.layout.thanksdialoglay,null)
-        val closeBtn = inflated.findViewById<Button>(R.id.close)
-        val dialog = AlertDialog.Builder(this)
-        dialog.setView(inflated)
-            .setCancelable(false)
-        val setDialog = dialog.create()
-        setDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        setDialog.show()
-
-        closeBtn.setOnClickListener {
-            setDialog.dismiss()
-        }
-    }
 }
